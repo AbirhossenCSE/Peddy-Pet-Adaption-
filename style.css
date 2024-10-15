@@ -1,3 +1,14 @@
 .font-lato{
     font-family: "Lato", sans-serif;
   }
+
+.category-btn{
+  box-sizing: border-box;
+  border: 1.5px solid rgb(14, 122, 129);
+  border-radius: 120px;
+  background: rgba(14, 122, 129, 0.1);
+  box-sizing: border-box;
+  border: 1.5px solid rgb(14, 122, 129);
+  border-radius: 120px;
+  background: rgba(14, 122, 129, 0.1);
+}
