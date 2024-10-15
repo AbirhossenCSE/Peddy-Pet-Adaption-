@@ -35,7 +35,7 @@ const displayCategories = (categories) => {
 // Load categories pets
 const loadCategoryPets = (category) => {
     // alert(id);
-    fetch(`https://openapi.programming-hero.com/api/peddy/category/cat`)
+    fetch(`https://openapi.programming-hero.com/api/peddy/category/${category}`)
     .then((res) => res.json())
     .then((data1) => displayPets(data1.data))
     .catch((err) => console.log(err));
