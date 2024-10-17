@@ -31,7 +31,7 @@
                 </ul>
             </div>
             <div class="w-10 h-10">
-                <img class="w-full border border-black rounded-full" src="https://img.icons8.com/?size=80&id=111473&format=png" alt="">
+                <img class="w-full border p-2 border-black rounded-full" src="https://img.icons8.com/?size=80&id=111473&format=png" alt="">
             </div>
         </nav>
 
@@ -39,7 +39,7 @@
             <div class="flex flex-col gap-5 justify-center items-center p-8">
                 <h3 class="font-bold">Bringing Families Together ❤️‍🔥</h3>
                 <h1 class="text-3xl font-bold text-center py-2">Your Path to Adoption <br>Starts Here</h1>
-                <p class="text-center items-center">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a.</p>
+                <p class="text-center items-center px-10">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a.</p>
                 <button class="btn  bg-[#0E7A81] text-white">View more</button>
             </div>
             <div class="flex justify-center p-8">
@@ -48,22 +48,35 @@
 
             <div class="flex flex-col gap-5 justify-center items-center p-8">
                 <h3 class="text-2xl font-bold py-2 items-center">Adopt  Your  Best Friend</h3>
-                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a.</p>
+                <p class="p-10 text-center">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a.</p>
             </div>
         </section>
     </header>
 
-    <section>
-        <div id="categories" class="py-3 flex gap-5 justify-center"></div>
+    <section class="w-11/12 mx-auto p-10">
+        <div id="categories" class="py-3 flex gap-5 justify-between"></div>
+    </section>
+    <!-- best deal and sort -->
+    <section class="w-11/12 mx-auto p-10 flex justify-between">
+        <div class="ml-6">
+            <h2>Best Deal For You</h2>
+        </div>
+        <div class="mr-6">
+            <button class="btn  bg-[#0E7A81] text-white">Sort By Price</button>
+        </div>
     </section>
 
+    <!-- main sec -->
     <main class="w-11/12 mx-auto grid grid-cols-4 gap-5 py-10">
         
-        <div class="col-span-3 px-2">
+        <div class="col-span-3 ml-4 px-2">
             <section id="pets" class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 py-10"></section>
         </div>
-            
-        </section>
+         
+        <div id="adoptPets" class="col-span-1 border border-black">
+
+        </div>
+        
     </main>
 
     <!-- Open the modal using ID.showModal() method -->
@@ -81,6 +94,29 @@
         </div>
     </div>
     </dialog>
+
+    <!-- adopt modal -->
+
+    <label for="my_modal_6" class="btn hidden" onclick="openModal()">Open Modal</label>
+
+    <input type="checkbox" id="my_modal_6" class="modal-toggle" />
+    <div class="modal" role="dialog">
+    <div class="modal-box">
+        <h3 class="text-2xl text-center font-bold">Congratulations</h3>
+        <p class="text-center font-bold">Adoption Process is started for you</p>
+        <p id="countdownText" class="text-2xl font-bold text-center mt-4"> 3</p>
+        <!-- <div class="modal-action">
+        <label for="my_modal_6" class="btn">Close!</label>
+        </div> -->
+    </div>
+    </div>
+
+
+    <!-- load Spinner -->
+    <div id="loading-spinner" class="hidden flex justify-center items-center min-h-[300px]">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-500"></div>
+    </div>
+    
 
 
     <footer class="bg-black">
