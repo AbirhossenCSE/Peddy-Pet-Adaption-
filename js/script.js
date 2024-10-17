@@ -28,7 +28,7 @@ const displayCategories = (categories) => {
         const buttonContainer = document.createElement('button');
         buttonContainer.innerHTML = `
             <button id="category-btn-${item.category}" onclick="loadCategoryPets('${item.category}')" class="btn category-btn px-10">
-               ${item.category}
+              <img class=" w-6" src="${item.category_icon}" alt="">  ${item.category}
             </button>
         `
 
@@ -77,7 +77,6 @@ const loadCategoryPets = (category) => {
         })
         .catch((err) => {
             console.log(err);
-            // Hide the spinner if an error occurs after 2 seconds
             setTimeout(() => {
                 document.getElementById('loading-spinner').classList.add('hidden');
                 document.getElementById('pets').classList.remove('hidden');
@@ -87,72 +86,113 @@ const loadCategoryPets = (category) => {
 
 
 
+
+
+let allPets = [];
+
+// Fetch and load pets from API
 const loadPets = (searchText = "") => {
     fetch(`https://openapi.programming-hero.com/api/peddy/pets?title=${searchText}`)
     .then((res) => res.json())
-    // .then((data) => console.log(data.categories))
-    .then((data) => displayPets(data.pets))
+    .then((data) => {
+        allPets = data.pets;
+        displayPets(allPets);
+    })
     .catch((err) => console.log(err));
-}
+};
 
-
-
-
-const displayPets = (pets) => {
-    const petContainer = document.getElementById('pets')
+// Display pets
+const displayPets = (pets, sortByPrice = false) => {
+    const petContainer = document.getElementById('pets');
     petContainer.innerHTML = "";
 
+    // Sort pets by price if sortByPrice is true
+    if (sortByPrice) {
+        pets.sort((a, b) => b.price - a.price);
+    }
+
     // No data
-    if (pets.length == 0) {
-        petContainer.classList.remove("grid")
+    if (pets.length === 0) {
+        petContainer.classList.remove("grid");
         petContainer.innerHTML = `
-            <div class=" min-h-[300px] w-full flex flex-col gap-5 justify-center items-center">
+            <div class="min-h-[300px] w-full flex flex-col gap-5 justify-center items-center">
                 <img src="./images/error.webp" />
-                <h2 class=" text-center text-xl font-bold">No Information Available</h2>
+                <h2 class="text-center text-xl font-bold">No Information Available</h2>
             </div>
         `;
-    }
-    else{
-        petContainer.classList.add("grid")
+    } else {
+        petContainer.classList.add("grid");
     }
 
     pets.forEach((pet) => {
-        console.log(pet);
         const card = document.createElement('div');
         card.classList = "card card-compact";
         card.innerHTML = `
             <figure class="">
-                <img
-                src= ${pet.image} class="h-full w-full object-cover" alt="Shoes" />
-
-                
-                
+                <img src=${pet.image} class="h-full w-full object-cover" alt="Pet" />
             </figure>
             <div class="px-0 py-2 w-full">
-                
                 <div>
                     <h2 class="font-bold">${pet.pet_name}</h2>
                     <div class="items-center gap-2">
-                        <p class="text-gray-400">Bread: ${pet.breed}</p>
+                        <p class="text-gray-400">Breed: ${pet.breed}</p>
                         <p class="text-gray-400">Birth Date: ${pet.date_of_birth}</p>
                         <p class="text-gray-400">Gender: ${pet.gender}</p>
                         <p class="text-gray-400">Price: ${pet.price}</p>
-                    
                     </div>
                     <div class="flex justify-between items-center w-full p-3">
-                        
-                        <button class="btn btn-sm btn-error">Details</button>
-                        <button onclick="adoptPets()" class="btn btn-sm btn-error mx-auto">Adopt</button>
-                        <button onclick="loadDetails(${pet.petId})" class="btn btn-sm btn-error">Details</button>
+                        <button class="btn btn-sm text-[#0E7A81]" >
+                            <img src="https://img.icons8.com/?size=40&id=82788&format=png&color=000000" class="h-full w-full p-1 object-cover" alt="Like">
+                        </button>
+                        <button onclick="adoptPets()" class="btn btn-sm text-[#0E7A81] mx-auto">Adopt</button>
+                        <button onclick="loadDetails(${pet.petId})" class="btn btn-sm text-[#0E7A81]">Details</button>
                     </div>
                 </div>
             </div>
         `;
-        petContainer.append(card)
-        
-    })
-    
-}
+        petContainer.append(card);
+    });
+};
+
+// Event listener for sorting by price
+document.getElementById('sort-btn').addEventListener('click', () => {
+    displayPets(allPets, true);
+});
+
+
+loadPets();
+
+
+
+// Liked pet
+// Function to handle liking a pet and appending it to another container
+// const likePet = (pet) => {
+//     const likedPetsContainer = document.getElementById('liked-pets'); // Ensure this container exists in your HTML
+
+//     // Create a card for the liked pet
+//     const likedCard = document.createElement('div');
+//     likedCard.classList = "card card-compact";
+//     likedCard.innerHTML = `
+//         <figure class="">
+//             <img src=${pet.image} class="h-full w-full object-cover" alt="Liked Pet" />
+//         </figure>
+//         <div class="px-0 py-2 w-full">
+//             <div>
+//                 <h2 class="font-bold">${pet.pet_name}</h2>
+//                 <div class="items-center gap-2">
+//                     <p class="text-gray-400">Breed: ${pet.breed}</p>
+//                     <p class="text-gray-400">Birth Date: ${pet.date_of_birth}</p>
+//                     <p class="text-gray-400">Gender: ${pet.gender}</p>
+//                     <p class="text-gray-400">Price: ${pet.price}</p>
+//                 </div>
+//             </div>
+//         </div>
+//     `;
+
+//     // Append the liked pet card to the liked pets container
+//     likedPetsContainer.append(likedCard);
+// };
+
 
 const loadDetails = async (petId) => {
     const uri = `https://openapi.programming-hero.com/api/peddy/pet/${petId}`;
