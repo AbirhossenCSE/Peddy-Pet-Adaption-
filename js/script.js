@@ -113,12 +113,12 @@ const loadPets = () => {
     .catch((err) => console.log(err));
 };
 
-// Display pets
+// // Display pets
 const displayPets = (pets, sortByPrice = false) => {
     const petContainer = document.getElementById('pets');
     petContainer.innerHTML = "";
 
-    // Sort pets by price if sortByPrice is true
+    // Sort pets by price
     if (sortByPrice) {
         pets.sort((a, b) => b.price - a.price);
     }
@@ -137,6 +137,12 @@ const displayPets = (pets, sortByPrice = false) => {
     }
 
     pets.forEach((pet) => {
+        // Use conditional check for null values
+        const breed = pet.breed ? pet.breed : "Unavailable";
+        const birthDate = pet.date_of_birth ? pet.date_of_birth : "Unavailable";
+        const gender = pet.gender ? pet.gender : "Unavailable";
+        const price = pet.price ? pet.price : "Unavailable";
+        
         const card = document.createElement('div');
         card.classList = "card card-compact p-2";
         card.innerHTML = `
@@ -147,10 +153,10 @@ const displayPets = (pets, sortByPrice = false) => {
                 <div>
                     <h2 class="font-bold text-xl pl-2">${pet.pet_name}</h2>
                     <div class="items-center gap-2">
-                        <p class="text-gray-500 pl-2">Breed: ${pet.breed}</p>
-                        <p class="text-gray-500 pl-2">Birth Date: ${pet.date_of_birth}</p>
-                        <p class="text-gray-500 pl-2">Gender: ${pet.gender}</p>
-                        <p class="text-gray-500 pl-2">Price: ${pet.price}</p>
+                        <p class="text-gray-500 pl-2">Breed: ${breed}</p>
+                        <p class="text-gray-500 pl-2">Birth Date: ${birthDate}</p>
+                        <p class="text-gray-500 pl-2">Gender: ${gender}</p>
+                        <p class="text-gray-500 pl-2">Price: ${price}</p>
                     </div>
                     <div class="flex justify-between items-center w-full p-3">
                         <button class="btn btn-sm text-[#0E7A81]">
@@ -165,6 +171,7 @@ const displayPets = (pets, sortByPrice = false) => {
         petContainer.append(card);
     });
 };
+
 
 // Event listener for sorting by price
 document.getElementById('sort-btn').addEventListener('click', () => {
