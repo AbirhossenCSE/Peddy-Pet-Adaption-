@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <!-- font awsome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="./style.css">
 
@@ -53,8 +55,8 @@
         </section>
     </header>
 
-    <section class="w-11/12 mx-auto p-10">
-        <div id="categories" class="py-3 lg:flex gap-5 justify-between"></div>
+    <section class="w-9/12 mx-auto p-10">
+        <div id="categories" class="py-3 lg:flex justify-between"></div>
     </section>
     <!-- best deal and sort -->
     <section class="w-11/12 mx-auto p-10 flex justify-between">
@@ -78,7 +80,6 @@
         </div>
         
     </main>
-
     <!-- Open the modal using ID.showModal() method -->
     <button id="showModalData" class="btn hidden" onclick="customModal.showModal()">open modal</button>
     <dialog id="customModal" class="modal modal-bottom sm:modal-middle">
@@ -89,7 +90,7 @@
         <div class="modal-action">
         <form method="dialog">
             <!-- if there is a button in form, it will close the modal -->
-            <button class="btn">Close</button>
+            <button class="btn">Cancel</button>
         </form>
         </div>
     </div>
@@ -102,19 +103,18 @@
     <input type="checkbox" id="my_modal_6" class="modal-toggle" />
     <div class="modal" role="dialog">
     <div class="modal-box">
-        <h3 class="text-2xl text-center font-bold">Congratulations</h3>
+        <h3 class="flex justify-center items-center mb-2"><img src="https://img.icons8.com/?size=100&id=q6BlPrJZmxHV&format=png&color=000000" alt=""></h3>
+        <h3 class="text-2xl text-center font-bold mb-2">Congratulations</h3>
         <p class="text-center font-bold">Adoption Process is started for you</p>
-        <p id="countdownText" class="text-2xl font-bold text-center mt-4"> 3</p>
-        <!-- <div class="modal-action">
-        <label for="my_modal_6" class="btn">Close!</label>
-        </div> -->
+        <p id="countdownText" class="text-3xl font-bold text-center mt-4"> 3</p>
+        
     </div>
     </div>
 
 
     <!-- load Spinner -->
     <div id="loading-spinner" class="hidden flex justify-center items-center min-h-[300px]">
-        <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-500"></div>
+        <span class="loading loading-bars loading-lg"></span>
     </div>
     
 

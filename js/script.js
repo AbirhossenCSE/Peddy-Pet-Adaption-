@@ -73,7 +73,7 @@ const loadCategoryPets = (category) => {
 
                 // Display pets data
                 displayPets(data.data);
-            }, 2000); // 2000ms = 2 seconds
+            }, 2000);
         })
         .catch((err) => {
             console.log(err);
@@ -91,12 +91,24 @@ const loadCategoryPets = (category) => {
 let allPets = [];
 
 // Fetch and load pets from API
-const loadPets = (searchText = "") => {
-    fetch(`https://openapi.programming-hero.com/api/peddy/pets?title=${searchText}`)
+const loadPets = () => {
+    document.getElementById('loading-spinner').classList.remove('hidden');
+    document.getElementById('pets').classList.add('hidden');
+
+    fetch(`https://openapi.programming-hero.com/api/peddy/pets`)
     .then((res) => res.json())
+
     .then((data) => {
-        allPets = data.pets;
-        displayPets(allPets);
+        setTimeout(() => {
+            // Hide the spinner after 2 seconds
+            document.getElementById('loading-spinner').classList.add('hidden');
+            document.getElementById('pets').classList.remove('hidden');
+
+            // Display pets data
+            allPets = data.pets;
+            displayPets(allPets);
+
+        }, 2000);
     })
     .catch((err) => console.log(err));
 };
@@ -126,22 +138,22 @@ const displayPets = (pets, sortByPrice = false) => {
 
     pets.forEach((pet) => {
         const card = document.createElement('div');
-        card.classList = "card card-compact";
+        card.classList = "card card-compact p-2";
         card.innerHTML = `
             <figure class="">
-                <img src=${pet.image} class="h-full w-full object-cover" alt="Pet" />
+                <img src=${pet.image} class="h-full w-full object-cover " alt="Pet" />
             </figure>
             <div class="px-0 py-2 w-full">
                 <div>
-                    <h2 class="font-bold">${pet.pet_name}</h2>
+                    <h2 class="font-bold text-xl pl-2">${pet.pet_name}</h2>
                     <div class="items-center gap-2">
-                        <p class="text-gray-400">Breed: ${pet.breed}</p>
-                        <p class="text-gray-400">Birth Date: ${pet.date_of_birth}</p>
-                        <p class="text-gray-400">Gender: ${pet.gender}</p>
-                        <p class="text-gray-400">Price: ${pet.price}</p>
+                        <p class="text-gray-500 pl-2">Breed: ${pet.breed}</p>
+                        <p class="text-gray-500 pl-2">Birth Date: ${pet.date_of_birth}</p>
+                        <p class="text-gray-500 pl-2">Gender: ${pet.gender}</p>
+                        <p class="text-gray-500 pl-2">Price: ${pet.price}</p>
                     </div>
                     <div class="flex justify-between items-center w-full p-3">
-                        <button class="btn btn-sm text-[#0E7A81]" >
+                        <button class="btn btn-sm text-[#0E7A81]">
                             <img src="https://img.icons8.com/?size=40&id=82788&format=png&color=000000" class="h-full w-full p-1 object-cover" alt="Like">
                         </button>
                         <button onclick="adoptPets()" class="btn btn-sm text-[#0E7A81] mx-auto">Adopt</button>
@@ -164,34 +176,7 @@ loadPets();
 
 
 
-// Liked pet
-// Function to handle liking a pet and appending it to another container
-// const likePet = (pet) => {
-//     const likedPetsContainer = document.getElementById('liked-pets'); // Ensure this container exists in your HTML
-
-//     // Create a card for the liked pet
-//     const likedCard = document.createElement('div');
-//     likedCard.classList = "card card-compact";
-//     likedCard.innerHTML = `
-//         <figure class="">
-//             <img src=${pet.image} class="h-full w-full object-cover" alt="Liked Pet" />
-//         </figure>
-//         <div class="px-0 py-2 w-full">
-//             <div>
-//                 <h2 class="font-bold">${pet.pet_name}</h2>
-//                 <div class="items-center gap-2">
-//                     <p class="text-gray-400">Breed: ${pet.breed}</p>
-//                     <p class="text-gray-400">Birth Date: ${pet.date_of_birth}</p>
-//                     <p class="text-gray-400">Gender: ${pet.gender}</p>
-//                     <p class="text-gray-400">Price: ${pet.price}</p>
-//                 </div>
-//             </div>
-//         </div>
-//     `;
-
-//     // Append the liked pet card to the liked pets container
-//     likedPetsContainer.append(likedCard);
-// };
+// // Liked pet
 
 
 const loadDetails = async (petId) => {
@@ -207,20 +192,29 @@ const loadDetails = async (petId) => {
 const displayDetails = (petData) => {
     console.log(petData);
     const detailContainer = document.getElementById('modal-content');
+
     detailContainer.innerHTML = `
         <img class="w-full" src=${petData.image} />
         <div class="px-0 py-2 w-full">
             <div class="text-black ">
                 <h2 class="font-bold text-black text-2xl">${petData.pet_name}</h2>
-                <div class="items-center gap-2">
-                    <p class="text-gray-400">Bread: ${petData.breed}</p>
-                    <p class="text-gray-400">Birth Date: ${petData.date_of_birth}</p>
-                    <p class="text-gray-400">Gender: ${petData.gender}</p>
-                    <p class="text-gray-400">Price: ${petData.price}</p>
+                <div class="items-center lg:flex lg:gap-8 ">
+                    <div>
+                        <p class="text-gray-400"><i class="fa-solid fa-passport h-1 pr-1 pt-2"></i> Bread: ${petData.breed}</p>
+                        <p class="text-gray-400 flex space-x-1"><i class="fa-solid fa-venus h-1 pr-1 pt-2"></i> Gender: ${petData.gender}</p>
+                        <p class="text-gray-400"><i class="fa-solid fa-virus h-1 pr-1 pt-2"></i> vaccinated_status: ${petData.vaccinated_status}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400"><i class="fa-regular fa-calendar"></i h-1 pr-1 pt-2> Birth: ${petData.date_of_birth}</p>
+                        <p class="text-gray-400">$ Price: ${petData.price}</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <p><span class="font-bold text-black">Details Information</span> <br> ${petData.pet_details}</p>
+        <div class="flex w-full flex-col">
+            <div class="divider"></div>
+        </div>
+        <p class="text-justify "><span class="font-extrabold text-black">Details Information</span> <br> ${petData.pet_details}</p>
     `;
     
     document.getElementById('customModal').showModal();
