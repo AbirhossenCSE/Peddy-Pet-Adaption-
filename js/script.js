@@ -159,7 +159,7 @@ const displayPets = (pets, sortByPrice = false) => {
                         <p class="text-gray-500 pl-2">Price: ${price}</p>
                     </div>
                     <div class="flex justify-between items-center w-full p-3">
-                        <button class="btn btn-sm text-[#0E7A81]">
+                        <button onclick="like('${pet.image}')" class="btn btn-sm text-[#0E7A81]">
                             <img src="https://img.icons8.com/?size=40&id=82788&format=png&color=000000" class="h-full w-full p-1 object-cover" alt="Like">
                         </button>
                         <button onclick="adoptPets()" class="btn btn-sm text-[#0E7A81] mx-auto">Adopt</button>
@@ -249,3 +249,12 @@ const adoptPets = () => {
 
 
 loadPets();
+
+// handle like pet
+const like = imgUrl => {
+    const imageContainer = document.getElementById('liked-button');
+    const div = document.createElement('div');
+    div.innerHTML = `<img src="${imgUrl}"/>`;
+    imageContainer.appendChild(div);
+    
+}
